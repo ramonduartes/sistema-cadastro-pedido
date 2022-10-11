@@ -31,6 +31,12 @@ import br.com.wmw.comprastc.exception.PersistenceException;
 	        assertEquals(true, resultado);
 	    }
 	    
+//	    @Test
+//	    void deveriaRetornarDescontoItem() {
+//	    	ItemPedido item = itemPedidoService.calculaValorTotalItem("10", "10", criarItem().getItens().get(1));
+//	    	 assertEquals(1125.0, item.getPrecoUnitario());
+//	    }
+	    
 	    @Test
 	    void deveriaDevolverFalsoSeTemUmItem() {
 	        Boolean resultado = pedidoService.verificaSeTemMinimoUmItem(criarPedido("01/01/2022"));
@@ -43,15 +49,10 @@ import br.com.wmw.comprastc.exception.PersistenceException;
 	    	assertEquals(true, resultado);
 	    }
 	    
-	    @Test
-	    void deveriaRetornarFalsoDataAnteriorDeHoje() throws PersistenceException {
-	        Boolean resultado = pedidoService.verificaDataEntrega("01/01/2022", criarPedido("01/01/2022"));
-	        assertEquals(false, resultado);
-	    }
 	    
 	    @Test
 	    void deveriaRetornarVerdadeiroDataIgualAHoje() throws PersistenceException {
-	    	Boolean resultado = pedidoService.verificaDataEntrega("10/10/2022", criarPedido("10/10/2022"));
+	    	Boolean resultado = pedidoService.verificaDataEntrega("11/10/2022", criarPedido("11/10/2022"));
 	    	assertEquals(true, resultado);
 	    }
 	    
@@ -60,6 +61,12 @@ import br.com.wmw.comprastc.exception.PersistenceException;
 	    	Boolean resultado = pedidoService.verificaDataEntrega("01/01/2023", criarPedido("01/01/2023"));
 	    	assertEquals(true, resultado);
 	    }
+	    
+//	    @Test
+//	    void deveriaCalcularValorTotalPedido() {
+//	    	double resultado = pedidoService.calculaValorTotal(criarPedido("01/01/2023"));
+//	    	
+//	    }
 	   
 	    private Pedido criarPedido(String dataEntrega) {
 	        Pedido pedido = new Pedido(1, "10/10/2022", "15/12/2022");

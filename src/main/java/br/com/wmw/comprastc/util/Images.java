@@ -6,7 +6,7 @@ import totalcross.ui.image.ImageException;
 
 public class Images {
 	
-	public static Image logoHeader, background, iconeProcurar, clienteRecente, iconePessoa, iconeEntrega, iconeEditar, iconeDeletar, iconeSincronizar, iconeListagem;
+	public static Image logoHeader, iconeProcurar, clienteRecente, iconeEntrega, iconeEditar, iconeDeletar, iconeSincronizar, iconeListagem;
 	
 	public Images() {
 		
@@ -18,16 +18,8 @@ public class Images {
 		return logoHeader;
 	}
 
-	public static Image getBackground() {
-		return background;
-	}
-
 	public static Image getIconeProcurar() {
 		return iconeProcurar;
-	}
-
-	public static Image getIconePessoa() {
-		return iconePessoa;
 	}
 
 	public static Image getIconeEntrega() {
@@ -51,9 +43,7 @@ public class Images {
 	public static void carregarImagens(int fmH) {
 		try {
 			logoHeader = new Image("images/logo-wmw.png");
-			background = new Image("images/background.jpg");
 			iconeProcurar = new Image("images/icone-procurar.png");
-			iconePessoa = new Image("images/icone-pessoa.png");
 			iconeEntrega = new Image("images/icone-entrega.png");
 			iconeEditar = new Image("images/icone-lapis.png");
 			iconeDeletar = new Image("images/icone-lixeira.png");

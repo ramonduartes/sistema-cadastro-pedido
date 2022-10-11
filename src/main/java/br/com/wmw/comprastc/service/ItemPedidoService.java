@@ -65,12 +65,6 @@ import totalcross.ui.dialog.MessageBox;
 	        }
 	    }
 
-		public Pedido adicionaItemSomaTotal(Pedido pedido, ItemPedido itemPedido) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		
     }
 
 
