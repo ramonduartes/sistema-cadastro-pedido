@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>br.com.wmw.comprastc</groupId>
+  <artifactId>Compras-TC</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Compras-TC</name>
+  <description>App de compras em TotalCross</description>
+  
+  <properties>
+  	<maven.compiler.source>1.8</maven.compiler.source>
+  	<maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+  	<dependencies>
+  		<dependency>
+  			<groupId>com.totalcross</groupId>	
+  			<artifactId>totalcross-sdk</artifactId>
+  			<version>5.0.0</version>
+  		</dependency>
+  		
+  		<dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.4.4</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+        
+  	</dependencies>    
+  	<repositories>
+  		<repository>
+  			<id>totalcross-repo</id>
+  			<name>ip-172-31-40-140-releases</name>
+  			<url>http://maven.totalcross.com/artifactory/repo1</url>
+  		</repository>
+  	</repositories>
+</project>
