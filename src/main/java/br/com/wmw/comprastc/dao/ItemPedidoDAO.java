@@ -41,13 +41,13 @@ public class ItemPedidoDAO {
         	ResultSet rs = st.executeQuery("SELECT COD_ITEMPEDIDO, QUANTIDADE, PRECO_UNITARIO, DESC_PORCENTO, TOTAL, COD_PRODUTO, COD_PEDIDO FROM ITEMPEDIDO WHERE COD_PEDIDO = " + id);
             while (rs.next()) {
             	ItemPedidoDTO item = new ItemPedidoDTO();
-				item.setCod_itempedido(rs.getInt("COD_ITEMPEDIDO"));
+				item.setId(rs.getInt("COD_ITEMPEDIDO"));
 				item.setQuantidade(rs.getInt("QUANTIDADE"));
 				item.setPrecoUnitario(rs.getDouble("PRECO_UNITARIO"));
 				item.setDesconto(rs.getDouble("DESC_PORCENTO"));
 				item.setTotalItem(rs.getDouble("TOTAL"));
-				item.setCod_produto(rs.getInt("COD_PRODUTO"));
-				item.setCod_pedido(rs.getInt("COD_PEDIDO"));
+				item.setIdProduto(rs.getInt("COD_PRODUTO"));
+				item.setIdPedido(rs.getInt("COD_PEDIDO"));
 				itens.add(item);
             }
         } finally {

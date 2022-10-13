@@ -20,7 +20,7 @@ import totalcross.ui.MainWindow;
 import totalcross.ui.ScrollContainer;
 import totalcross.ui.dialog.MessageBox;
 
-public class ListPedidosFinalizados extends ScrollContainer {
+public class ListPedidosEnviados extends ScrollContainer {
 
 	private Container containerTopo, containerPedidos, containerActions;
 	private Button btVoltar, btEditar, btDeletar, btSincronizar;
@@ -32,15 +32,15 @@ public class ListPedidosFinalizados extends ScrollContainer {
 	private Cliente cliente = new Cliente();
 	private PedidoAPI pedidoAPI = new PedidoAPI();
 
-	public ListPedidosFinalizados() {
+	public ListPedidosEnviados() {
 
 	}
 
-	public ListPedidosFinalizados(int id) throws SQLException {
+	public ListPedidosEnviados(int id) throws SQLException {
 		this.cliente = clienteDAO.detalharCliente(id);
 	}
 
-	public ListPedidosFinalizados(Cliente cliente) {
+	public ListPedidosEnviados(Cliente cliente) {
 
 	}
 
@@ -61,12 +61,10 @@ public class ListPedidosFinalizados extends ScrollContainer {
 		containerTopo.add(lbPedidos, CENTER, CENTER, PREFERRED, PREFERRED);
 
 		try {
-			pedidos = pedidoService.listarPedidosFechados();
+			pedidos = pedidoService.listarPedidosEnviados();
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-
-
 
 		for(Pedido pedido : pedidos) {
 
@@ -95,50 +93,6 @@ public class ListPedidosFinalizados extends ScrollContainer {
 			containerPedidos.add(lbDataEntrega, SAME, AFTER, PREFERRED, PREFERRED);
 
 
-
-			containerActions = new Container();
-			containerActions.setInsets(0, 25, 50, 0 );
-			add(containerActions, RIGHT + 10, SAME, PARENTSIZE + 35, PARENTSIZE + 30);
-
-
-			btEditar = new Button(Images.iconeEditar);
-			btEditar.setBorder(Container.BORDER_NONE);
-			btEditar.setEnabled(false);
-			containerActions.add(btEditar, LEFT, SAME, PREFERRED, PREFERRED);
-			btEditar.addPressListener((e) -> {
-				MainWindow.getMainWindow().swap(new PedidoResumeWindow(pedido));
-			});
-
-			btDeletar = new Button(Images.iconeDeletar);
-			btDeletar.setBorder(Container.BORDER_NONE);
-			containerActions.add(btDeletar, RIGHT, SAME, PREFERRED, PREFERRED);
-			btDeletar.addPressListener((e) -> {
-
-				try {
-					pedidoDAO.deletarPedido(pedido.getCodigoPedido());
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-
-				MessageBox mb = new MessageBox("Message", "Pedido excluído com sucesso.", new String[]{"Fechar"});
-				mb.popup();
-
-				MainWindow.getMainWindow().swap(new ListPedidosFinalizados());
-
-			});
-			
-			btSincronizar = new Button(Images.iconeSincronizar);
-			btSincronizar.setBorder(Container.BORDER_NONE);
-			containerActions.add(btSincronizar, CENTER, AFTER, PREFERRED, PREFERRED);
-			btSincronizar.addPressListener((e) -> {
-				try {
-					pedidoAPI.enviarPedidosBackEnd();
-				} catch (PersistenceException e1) {
-					e1.printStackTrace();
-				}
-				MainWindow.getMainWindow().swap(new ListPedidosFinalizados());
-				
-			});
 		}
 
 

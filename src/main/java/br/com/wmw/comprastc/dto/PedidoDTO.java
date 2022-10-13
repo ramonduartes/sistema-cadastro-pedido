@@ -11,7 +11,6 @@ public class PedidoDTO {
 	private String dataEntrega;
 	private double totalPedido;
 	private String statusPedido;
-	private int sincronizado = 0;
 	private List<ItemPedidoDTO> itens = new ArrayList<>();
 
 	public PedidoDTO() {
@@ -75,20 +74,16 @@ public class PedidoDTO {
 	    public void setItens(List<ItemPedidoDTO> itens) {
 	        this.itens = itens;
 	    }
-	    
-	    
-		public int getSincronizado() {
-			return sincronizado;
-		}
-		public void setSincronizado(int sincronizado) {
-			this.sincronizado = sincronizado;
-		}
+	
+
 		@Override
 		public String toString() {
 			return "PedidoDTO [codigoPedido=" + codigoPedido + ", codigoCliente=" + codigoCliente + ", dataEmissao="
 					+ dataEmissao + ", dataEntrega=" + dataEntrega + ", totalPedido=" + totalPedido + ", statusPedido="
 					+ statusPedido + ", itens=" + itens + "]";
 		}
+		
+		
 
 	   
 

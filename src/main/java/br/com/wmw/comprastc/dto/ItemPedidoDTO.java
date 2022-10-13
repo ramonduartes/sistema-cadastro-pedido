@@ -2,18 +2,18 @@ package br.com.wmw.comprastc.dto;
 
 public class ItemPedidoDTO {
 
-	private int cod_itempedido;
-    private int cod_produto;
-    private int cod_pedido;
+	private int id;
+    private int idProduto;
+    private int idPedido;
     private Integer quantidade;
     private double precoUnitario;
     private double desconto;
     private double totalItem;
     
-    public ItemPedidoDTO(int cod_itempedido, int cod_produto, int cod_pedido, Integer quantidade, double precoUnitario, double Desconto, double totalItem) {
-    	setCod_itempedido(cod_itempedido);
-    	setCod_produto(cod_produto);
-    	setCod_pedido(cod_pedido);
+    public ItemPedidoDTO(int id, int idProduto, int idPedido, Integer quantidade, double precoUnitario, double Desconto, double totalItem) {
+    	setId(id);
+    	setIdProduto(idProduto);
+    	setIdPedido(idPedido);
     	setQuantidade(quantidade);
     	setPrecoUnitario(precoUnitario);
     	setDesconto(Desconto);
@@ -24,52 +24,68 @@ public class ItemPedidoDTO {
     	
     }
     
-    public ItemPedidoDTO(int cod_pedido) {
-		this.cod_pedido = cod_pedido;
-	}
-    
 
-	public int getCod_itempedido(int cod_itempedido) {
-		return cod_itempedido;
+	public int getId() {
+		return id;
 	}
-	public void setCod_itempedido(int cod_itempedido) {
-		this.cod_itempedido = cod_itempedido;
+
+	public void setId(int id) {
+		this.id = id;
 	}
-	public int getCod_produto(int cod_produto) {
-		return cod_produto;
+
+	public int getIdProduto() {
+		return idProduto;
 	}
-	public void setCod_produto(int cod_produto) {
-		this.cod_produto = cod_produto;
+
+	public void setIdProduto(int idProduto) {
+		this.idProduto = idProduto;
 	}
-	public int getCod_pedido(int cod_pedido) {
-		return cod_pedido;
+
+	public int getIdPedido() {
+		return idPedido;
 	}
-	public void setCod_pedido(int cod_pedido) {
-		this.cod_pedido = cod_pedido;
+
+	public void setIdPedido(int idPedido) {
+		this.idPedido = idPedido;
 	}
-	public Integer getQuantidade(Integer quantidade) {
+
+	public Integer getQuantidade() {
 		return quantidade;
 	}
+
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
-	public double getPrecoUnitario(double precoUnitario) {
+
+	public double getPrecoUnitario() {
 		return precoUnitario;
 	}
+
 	public void setPrecoUnitario(double precoUnitario) {
 		this.precoUnitario = precoUnitario;
 	}
-	public double getDesconto(double Desconto) {
+
+	public double getDesconto() {
 		return desconto;
 	}
+
 	public void setDesconto(double desconto) {
 		this.desconto = desconto;
 	}
-	public double getTotalItem(double totalItem) {
+
+	public double getTotalItem() {
 		return totalItem;
 	}
+
 	public void setTotalItem(double totalItem) {
 		this.totalItem = totalItem;
+	}
+
+	@Override
+	public String toString() {
+		return "ItemPedidoDTO [cod_itempedido=" + id + ", cod_produto=" + idProduto + ", cod_pedido="
+				+ idPedido + ", quantidade=" + quantidade + ", precoUnitario=" + precoUnitario + ", desconto="
+				+ desconto + ", totalItem=" + totalItem + "]";
 	}
 
   

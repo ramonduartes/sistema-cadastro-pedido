@@ -10,6 +10,8 @@ import br.com.wmw.comprastc.dados.Response;
 import br.com.wmw.comprastc.dao.ItemPedidoDAO;
 import br.com.wmw.comprastc.dao.PedidoDAO;
 import br.com.wmw.comprastc.dto.PedidoDTO;
+import br.com.wmw.comprastc.exception.PersistenceException;
+import br.com.wmw.comprastc.service.PedidoService;
 import totalcross.io.ByteArrayStream;
 import totalcross.io.IOException;
 import totalcross.json.JSONObject;
@@ -22,7 +24,7 @@ public class PedidoAPI {
     private PedidoDAO pedidoDAO = new PedidoDAO();
     private ItemPedidoDAO itemDAO = new ItemPedidoDAO();
 
-    public int enviarPedidosBackEnd() {
+    public int enviarPedidosBackEnd() throws PersistenceException {
 
         List<PedidoDTO> pedidos;
 
@@ -60,8 +62,7 @@ public class PedidoAPI {
                     response.responseCode = httpStream.responseCode;
 
                     if (httpStream.responseCode == 200) {
-                       
-                        System.out.println(pedido.toString());
+                       pedidoDAO.updatePedidoEnviado(pedido);
                     }
                     else {
                         throw new RuntimeException(data);

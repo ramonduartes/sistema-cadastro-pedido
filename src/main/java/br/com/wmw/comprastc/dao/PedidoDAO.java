@@ -124,14 +124,14 @@ public class PedidoDAO {
 
 		return pedidosList;	
 	}
-	
 
-	private static void updatePedidoEnviado(Pedido pedido) throws PersistenceException {
-		pedido.setStatusPedido(StatusPedido.ENVIADO);
-		new PedidoDAO().update(pedido);
+
+	public void updatePedidoEnviado(PedidoDTO pedido) throws PersistenceException {
+		pedido.setStatusPedido("ENVIADO");
+		new PedidoDAO().updatePedidoDTO(pedido);
 	}
 
-	private void update(Pedido pedido) throws PersistenceException {
+	public void update(Pedido pedido) throws PersistenceException {
 		try {
 			Connection connection = DatabaseManager.getConnection();
 			try {
@@ -158,6 +158,36 @@ public class PedidoDAO {
 			Vm.debug(e.getMessage());
 		}
 	}
+
+	public void updatePedidoDTO(PedidoDTO pedido) throws PersistenceException {
+
+		try {
+			Connection connection = DatabaseManager.getConnection();
+			try {   
+				PreparedStatement ps = connection.prepareStatement("UPDATE PEDIDO SET DATA_ENTREGA = ?, COD_CLIENTE = ?, STATUS_PEDIDO = ?, TOTAL_PEDIDO = ? WHERE COD_PEDIDO = ?");
+				try {
+					ps.setString(1, pedido.getDataEntrega());
+					ps.setLong(2, pedido.getCodigoCliente());
+					ps.setString(3, pedido.getStatusPedido());
+					ps.setDouble(4, pedido.getTotalPedido());
+					ps.setDouble(5, pedido.getCodigoPedido());
+
+					int affectedRows = ps.executeUpdate();
+					if(affectedRows == 0) throw new PersistenceException("Erro ao atualizar o pedido.");
+				} finally {
+					ps.close();
+				}
+
+			} finally {
+				connection.close();
+			}
+
+		} catch(SQLException e) {
+			Vm.debug(e.getMessage());
+		}
+
+	}
+
 	public Pedido detalharPedido(int id) throws SQLException {
 		Connection dbcon = DatabaseManager.getConnection();
 
@@ -241,32 +271,32 @@ public class PedidoDAO {
 
 	}
 
-	 public List<PedidoDTO> listarPedidoDTONaoSincronizados() throws SQLException {
-	        List<PedidoDTO> pedidos = new ArrayList<>();
-	        Connection dbcon = DatabaseManager.getConnection();
-	        try {
-	            ResultSet rs = dbcon.createStatement().executeQuery("SELECT COD_PEDIDO, COD_CLIENTE, STATUS_PEDIDO, DATA_ENTREGA, DATA_EMISSAO, TOTAL_PEDIDO FROM PEDIDO WHERE SINCRONIZADO = 0");
-	            try {
-	                while (rs.next()) {
-	                    PedidoDTO pedido = new PedidoDTO();
-	                    pedido.setCodigoPedido(rs.getInt("COD_PEDIDO"));
-	    				pedido.setCodigoCliente(rs.getInt("COD_CLIENTE"));
-	    				pedido.setStatusPedido(rs.getString("STATUS_PEDIDO"));
-	    				pedido.setDataEntrega(rs.getString("DATA_ENTREGA"));
-	    				pedido.setDataEmissao(rs.getString("DATA_EMISSAO"));
-	    				pedido.setTotalPedido(rs.getDouble("TOTAL_PEDIDO"));
-	                    pedidos.add(pedido);
-	                }
-	            } finally {
-	                rs.close();
-	            }
-	        } finally {
-	            dbcon.close();
-	        }
+	public List<PedidoDTO> listarPedidoDTONaoSincronizados() throws SQLException {
+		List<PedidoDTO> pedidos = new ArrayList<>();
+		Connection dbcon = DatabaseManager.getConnection();
+		try {
+			ResultSet rs = dbcon.createStatement().executeQuery("SELECT COD_PEDIDO, COD_CLIENTE, STATUS_PEDIDO, DATA_ENTREGA, DATA_EMISSAO, TOTAL_PEDIDO FROM PEDIDO WHERE STATUS_PEDIDO = 'FECHADO'");
+			try {
+				while (rs.next()) {
+					PedidoDTO pedido = new PedidoDTO();
+					pedido.setCodigoPedido(rs.getInt("COD_PEDIDO"));
+					pedido.setCodigoCliente(rs.getInt("COD_CLIENTE"));
+					pedido.setStatusPedido(rs.getString("STATUS_PEDIDO"));
+					pedido.setDataEntrega(rs.getString("DATA_ENTREGA"));
+					pedido.setDataEmissao(rs.getString("DATA_EMISSAO"));
+					pedido.setTotalPedido(rs.getDouble("TOTAL_PEDIDO"));
+					pedidos.add(pedido);
+				}
+			} finally {
+				rs.close();
+			}
+		} finally {
+			dbcon.close();
+		}
 
-	        return pedidos;
+		return pedidos;
 
-	    }
+	}
 
 
 }

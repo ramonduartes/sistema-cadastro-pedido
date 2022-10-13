@@ -98,7 +98,7 @@ public class PedidoViewWindow extends Container {
 					pedidoService.atualizarPedido(pedido);
 					if (pedidoService.verificaSeTemMinimoUmItem(pedido)) {
 						pedidoService.fecharPedido(pedido);
-						MainWindow.getMainWindow().swap(new ListarPedidoWindow(pedido.getCodigoCliente()));
+						MainWindow.getMainWindow().swap(new ListPedidosFinalizados(pedido.getCodigoCliente()));
 					} else {
 						MessageBox mb = new MessageBox("Message", "Pedido precisa de no mínimo 1 item.", new String[]{"Fechar"});
 						mb.popup();

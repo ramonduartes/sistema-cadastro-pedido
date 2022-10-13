@@ -31,11 +31,11 @@ import br.com.wmw.comprastc.exception.PersistenceException;
 	        assertEquals(true, resultado);
 	    }
 	    
-//	    @Test
-//	    void deveriaRetornarDescontoItem() {
-//	    	ItemPedido item = itemPedidoService.calculaValorTotalItem("10", "10", criarItem().getItens().get(1));
-//	    	 assertEquals(1125.0, item.getPrecoUnitario());
-//	    }
+	    @Test
+	    void deveriaRetornarDescontoItem() {
+	    	ItemPedido item = itemPedidoService.calculaValorTotalItem("1", "10", criarItem().getItens().get(0));
+	    	 assertEquals(225.0, item.getTotalItem());
+	    }
 	    
 	    @Test
 	    void deveriaDevolverFalsoSeTemUmItem() {

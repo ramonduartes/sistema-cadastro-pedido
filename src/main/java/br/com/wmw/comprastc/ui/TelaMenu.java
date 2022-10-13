@@ -11,7 +11,7 @@ import totalcross.ui.MainWindow;
 
 
 public class TelaMenu extends Container {
-	   private Container back;
+	   private Container containerHeader, containerFooter;
 	    private ImageControl logo;
 
 
@@ -20,8 +20,8 @@ public class TelaMenu extends Container {
 
 	    public void initUI() {
 	        Images.carregarImagens(fmH);
-	        back = new Container();
-	        add(back, LEFT, TOP, FILL, FILL);
+	        containerHeader = new Container();
+	        add(containerHeader, LEFT, TOP, FILL, FILL);
 	        setBackForeColors(Colors.WHITE, Colors.WHITE);
 
 	        logo = new ImageControl(Images.logoHeader);
@@ -31,28 +31,28 @@ public class TelaMenu extends Container {
 	                PARENTSIZE + 50, PARENTSIZE + 30);
 
 	      
-	        Container cont = new Container();
-	        cont.transparentBackground = true;
-	        back.add(cont, AFTER + MaterialConstants.BORDER_SPACING, TOP + 90, FILL - MaterialConstants.BORDER_SPACING,
+	        Container containerBody = new Container();
+	        containerBody.transparentBackground = true;
+	        containerHeader.add(containerBody, AFTER + MaterialConstants.BORDER_SPACING, TOP + 90, FILL - MaterialConstants.BORDER_SPACING,
 	                PARENTSIZE + 720);
 
 	        Button btPedidos = new Button("Pedidos em Aberto");
 	        btPedidos.setBackForeColors(Colors.BLUE, Colors.WHITE);
-	        cont.add(btPedidos, LEFT, AFTER + MaterialConstants.COMPONENT_SPACING, FILL, PREFERRED);
+	        containerBody.add(btPedidos, LEFT, AFTER + MaterialConstants.COMPONENT_SPACING, FILL, PREFERRED);
 	        btPedidos.addPressListener((e) -> {
 	            MainWindow.getMainWindow().swap(new ListarPedidoWindow());
 	        });
 
 	        Button btCadastrarPedido = new Button("Cadastrar Pedidos");
 	        btCadastrarPedido.setBackForeColors(Colors.BLUE, Colors.WHITE);
-	        cont.add(btCadastrarPedido, LEFT, AFTER + MaterialConstants.COMPONENT_SPACING, FILL, PREFERRED);
+	        containerBody.add(btCadastrarPedido, LEFT, AFTER + MaterialConstants.COMPONENT_SPACING, FILL, PREFERRED);
 	        btCadastrarPedido.addPressListener((e) -> {
 	            MainWindow.getMainWindow().swap(new ListarClienteWindow());
 	        });
 
 	        Button btSincronizar = new Button("Sincronizar dados");
 	        btSincronizar.setBackForeColors(Colors.BLUE, Colors.WHITE);
-	        cont.add(btSincronizar, LEFT, AFTER + MaterialConstants.COMPONENT_SPACING, FILL, PREFERRED);
+	        containerBody.add(btSincronizar, LEFT, AFTER + MaterialConstants.COMPONENT_SPACING, FILL, PREFERRED);
 	        btSincronizar.addPressListener((e) -> {
 	            Sincronizar sincronizar = new Sincronizar();
 	            sincronizar.run();
@@ -60,22 +60,33 @@ public class TelaMenu extends Container {
 	        
 	        Button btProdutos = new Button("Produtos");
 	        btProdutos.setBackForeColors(Colors.BLUE, Colors.WHITE);
-	        cont.add(btProdutos, LEFT, AFTER + MaterialConstants.COMPONENT_SPACING, FILL, PREFERRED);
+	        containerBody.add(btProdutos, LEFT, AFTER + MaterialConstants.COMPONENT_SPACING, FILL, PREFERRED);
 	        btProdutos.addPressListener((e) -> {
 		            MainWindow.getMainWindow().swap(new ListarProdutoWindow());
 	        });
 	        
 	        Button btPedidosFinalizados = new Button("Pedidos Finalizados");
 	        btPedidosFinalizados.setBackForeColors(Colors.BLUE, Colors.WHITE);
-	        cont.add(btPedidosFinalizados, LEFT, AFTER + MaterialConstants.COMPONENT_SPACING, FILL, PREFERRED);
+	        containerBody.add(btPedidosFinalizados, LEFT, AFTER + MaterialConstants.COMPONENT_SPACING, FILL, PREFERRED);
 	        btPedidosFinalizados.addPressListener((e) -> {
 	        	MainWindow.getMainWindow().swap(new ListPedidosFinalizados());
 	        });
 	        
+	        Button btPedidosEnviados = new Button("Pedidos Enviados");
+	        btPedidosEnviados.setBackForeColors(Colors.BLUE, Colors.WHITE);
+	        containerBody.add(btPedidosEnviados, LEFT, AFTER + MaterialConstants.COMPONENT_SPACING, FILL, PREFERRED);
+	        btPedidosEnviados.addPressListener((e) -> {
+	        	MainWindow.getMainWindow().swap(new ListPedidosEnviados());
+	        });
+	        
+	        containerFooter = new Container();
+			add(containerFooter, CENTER - (MaterialConstants.COMPONENT_SPACING), BOTTOM + MaterialConstants.BORDER_SPACING,
+	                PARENTSIZE + 50, PARENTSIZE + 15);
+	        
 	        
 	        Button btSair = new Button("Sair");
 	        btSair.setBackForeColors(Colors.BLUE, Colors.WHITE);
-	        cont.add(btSair, LEFT, AFTER + 250, FILL, PREFERRED +10);
+	        containerFooter.add(btSair, LEFT, AFTER + MaterialConstants.COMPONENT_SPACING, FILL, PREFERRED);
 	        btSair.addPressListener((e) -> {
 	        	MainWindow.exit(0);
 	        });

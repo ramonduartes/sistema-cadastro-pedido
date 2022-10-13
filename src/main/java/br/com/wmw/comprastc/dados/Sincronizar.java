@@ -32,7 +32,6 @@ public class Sincronizar extends Thread {
       pb.transitionEffect = Window.TRANSITION_NONE;
       try
       {
-//    	 pedidoAPI.enviarPedidosBackEnd();
     	 DatabaseManager.carregarTabelas();
          receberClientes();
          receberProdutos();
