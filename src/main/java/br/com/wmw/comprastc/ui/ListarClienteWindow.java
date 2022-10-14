@@ -74,14 +74,13 @@ public class ListarClienteWindow extends ScrollContainer {
 		containerFooter = new Container();
 		containerFooter.borderColor = Colors.GRAY;
 		containerFooter.setBorderStyle(Container.BORDER_TOP);
-		containerFooter.setInsets(35, 35, 25, 25);
-		add(containerFooter, LEFT+MaterialConstants.BORDER_SPACING, BOTTOM-MaterialConstants.BORDER_SPACING, 
-				FILL-MaterialConstants.BORDER_SPACING, PARENTSIZE+10);
+		containerFooter.setInsets(15, 15, 25, 25);
+		add(containerFooter, LEFT, BOTTOM, FILL, PARENTSIZE + 15);
 		btVoltar = new Button("Voltar");
 		btVoltar.setBackForeColors(Colors.BLUE, Colors.WHITE);
 		btVoltar.borderColor = Colors.GRAY;
 		btVoltar.setBorder(Container.BORDER_ROUNDED);
-		containerFooter.add(btVoltar, LEFT, BOTTOM);
+		containerFooter.add(btVoltar, LEFT, CENTER, PARENTSIZE + 52 , PARENTSIZE + 95);
 		btVoltar.addPressListener((e) -> {
 			MainWindow.getMainWindow().swap(new TelaMenu());
 		});
@@ -90,7 +89,7 @@ public class ListarClienteWindow extends ScrollContainer {
 		btAvancar.setBackForeColors(Colors.BLUE, Colors.WHITE);
 		btAvancar.borderColor = Colors.GRAY;
 		btAvancar.setBorder(Container.BORDER_ROUNDED);
-		containerFooter.add(btAvancar, RIGHT, BOTTOM);
+		containerFooter.add(btAvancar, RIGHT, CENTER, PARENTSIZE + 47 , PARENTSIZE + 95);
 		btAvancar.addPressListener((e) -> {
 			MainWindow.getMainWindow().swap(new TelaCadastroPedido(clienteSelecionado));
 

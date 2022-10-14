@@ -6,7 +6,6 @@ import br.com.wmw.comprastc.domain.Pedido;
 import br.com.wmw.comprastc.exception.PersistenceException;
 import br.com.wmw.comprastc.service.PedidoService;
 import br.com.wmw.comprastc.util.Colors;
-import br.com.wmw.comprastc.util.MaterialConstants;
 import totalcross.ui.Button;
 import totalcross.ui.Container;
 import totalcross.ui.Label;
@@ -68,15 +67,14 @@ public class PedidoViewWindow extends Container {
 			containerFooter = new Container();
 			containerFooter.borderColor = Colors.GRAY;
 			containerFooter.setBorderStyle(Container.BORDER_TOP);
-			containerFooter.setInsets(35, 35, 25, 25);
-			add(containerFooter, LEFT+MaterialConstants.BORDER_SPACING, BOTTOM-MaterialConstants.BORDER_SPACING, 
-					FILL-MaterialConstants.BORDER_SPACING, PARENTSIZE+10);
+			containerFooter.setInsets(15, 15, 25, 25);
+			add(containerFooter, LEFT, BOTTOM, FILL, PARENTSIZE + 15);
 
 			btSalvar = new Button("Salvar");
 			btSalvar.setBackForeColors(Colors.BLUE, Colors.WHITE);
 			btSalvar.borderColor = Colors.GRAY;
 			btSalvar.setBorder(Container.BORDER_ROUNDED);
-			containerFooter.add(btSalvar, LEFT, BOTTOM);
+			containerFooter.add(btSalvar, LEFT, CENTER, PARENTSIZE + 52 , PARENTSIZE + 95);
 			btSalvar.addPressListener((e) -> {
 				try {
 					pedidoService.atualizarPedido(pedido);
@@ -92,7 +90,7 @@ public class PedidoViewWindow extends Container {
 			btFinalizar.setBackForeColors(Colors.BLUE, Colors.WHITE);
 			btFinalizar.borderColor = Colors.GRAY;
 			btFinalizar.setBorder(Container.BORDER_ROUNDED);
-			containerFooter.add(btFinalizar, RIGHT, BOTTOM);
+			containerFooter.add(btFinalizar, RIGHT, CENTER, PARENTSIZE + 47 , PARENTSIZE + 95);
 			btFinalizar.addPressListener((e) -> {
 				try {
 					pedidoService.atualizarPedido(pedido);

@@ -59,20 +59,19 @@ public class ItemPedidoDAO {
     }
 
 	public int retornaExisteId(Integer id) throws SQLException {
-		  Connection dbcon = DatabaseManager.getConnection();
+		  Connection connection = DatabaseManager.getConnection();
 
-	        int id_retorno = -1;
-	        ResultSet rsTemp = null;
+	        int retorno = -1;
 	        try {
-	            rsTemp = dbcon.createStatement().executeQuery("SELECT COD_ITEMPEDIDO AS COD_ITEMPEDIDO FROM ITEMPEDIDO WHERE COD_ITEMPEDIDO=" + id + "");
-	            while (rsTemp.next()) {
-	                id_retorno = rsTemp.getInt("COD_ITEMPEDIDO");
+	            ResultSet rs = connection.createStatement().executeQuery("SELECT COD_ITEMPEDIDO AS COD_ITEMPEDIDO FROM ITEMPEDIDO WHERE COD_ITEMPEDIDO=" + id + "");
+	            while (rs.next()) {
+	                retorno = rs.getInt("COD_ITEMPEDIDO");
 	            }
 	        } finally {
-	            dbcon.close();
+	            connection.close();
 	        }
 
-	        return id_retorno;
+	        return retorno;
 
 	    }
 
@@ -110,7 +109,7 @@ public class ItemPedidoDAO {
 
         try {
             dbcon.createStatement().execute("INSERT INTO ITEMPEDIDO (COD_PEDIDO, COD_PRODUTO, QUANTIDADE, PRECO_UNITARIO, DESC_PORCENTO, TOTAL) values ("
-                    + itemPedido.getCodigoPedido() + ", "
+                    + itemPedido.getCodigoPedido() + ",	 "
                     + itemPedido.getCodigoProduto() + ", "
                     + itemPedido.getQuantidade() + ", "
                     + itemPedido.getPrecoUnitario() + ", "

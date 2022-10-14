@@ -45,7 +45,7 @@ import totalcross.ui.dialog.MessageBox;
 		}
 		
 
-		public boolean verificaItem(ItemPedido item) {
+		public boolean verificaSeTemUmItemNoPedido(ItemPedido item) {
 			if (item != null) {
 	            return true;
 	        } else {

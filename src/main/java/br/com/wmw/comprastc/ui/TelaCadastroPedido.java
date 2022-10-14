@@ -176,7 +176,7 @@ public class TelaCadastroPedido extends ScrollContainer {
         containerActions.add(btnAdicionar, LEFT, CENTER, PARENTSIZE + 52 , PARENTSIZE + 95);
         btnAdicionar.addPressListener((e) -> {
 
-            if (service.verificaItem(item)){
+            if (service.verificaSeTemUmItemNoPedido(item)){
                 if(service.verificaQuantidadeMinPedido(item)) {
                 	pedido.getItens().add(item);
                 	item = new ItemPedido();

@@ -45,7 +45,7 @@ import br.com.wmw.comprastc.exception.PersistenceException;
 	    
 	    @Test
 	    void deveriaDevolverVerdadeiroSeTemUmProduto() {
-	    	boolean resultado = itemPedidoService.verificaItem(criarItem().getItens().get(0));
+	    	boolean resultado = itemPedidoService.verificaSeTemUmItemNoPedido(criarItem().getItens().get(0));
 	    	assertEquals(true, resultado);
 	    }
 	    

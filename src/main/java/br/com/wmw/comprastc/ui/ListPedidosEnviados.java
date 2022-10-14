@@ -71,7 +71,7 @@ public class ListPedidosEnviados extends ScrollContainer {
 			containerPedidos = new Container();
 			containerPedidos.borderColor = Colors.GRAY;
 			containerPedidos.setBorderStyle(Container.BORDER_TOP);
-
+			containerPedidos.setBackColor(Colors.WHITE);
 			containerPedidos.setInsets(25, 25, 25, 25);
 			add(containerPedidos, LEFT, AFTER, FILL, PARENTSIZE + 20);
 

@@ -41,11 +41,16 @@ public class ClienteDAO {
 
 		Connection connection = DatabaseManager.getConnection();
         List<Cliente> clientes = new ArrayList<>();
-        ResultSet rsTemp = null;
         try {
-            rsTemp = connection.createStatement().executeQuery("SELECT * FROM CLIENTE");
-            while (rsTemp.next()) {
-                Cliente cliente = new Cliente(rsTemp);
+           ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM CLIENTE");
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("COD_CLIENTE"));
+                cliente.setNome(rs.getString("NOME"));
+                cliente.setTipoPessoa(rs.getString("TIPO_PESSOA"));
+                cliente.setCnpj_cpf(rs.getString("CNPJ_CPF"));
+                cliente.setTelefone("TELEFONE");
+                cliente.setEmail(rs.getString("EMAIL"));
                 clientes.add(cliente);
             }
         } finally {
@@ -56,26 +61,7 @@ public class ClienteDAO {
 
     }
 
-	
-	public Cliente buscarPorCodigo(int id) throws SQLException {
-		Cliente cliente = new Cliente();
-		Connection connection = DatabaseManager.getConnection();
-		PreparedStatement pst = connection.prepareStatement("SELECT COD_CLIENTE, NOME FROM CLIENTE WHERE COD_CLIENTE = ?");
-		pst.setInt(1, id);
-		try (ResultSet rs = pst.executeQuery()){
-			while(rs.next()) {
-				cliente.setId(rs.getInt("COD_CLIENTE"));
-				cliente.setNome(rs.getString("NOME"));
-			}
-				pst.close();
-				connection.close();
-			} catch (final SQLException e) {
-				Vm.debug(e.getMessage());
-			}
-			return cliente;
-		
-	}
-	
+
 	public Cliente findByCodigoCliente(int codigo) {
 		Cliente cliente = new Cliente();
 		try{
@@ -125,19 +111,6 @@ public class ClienteDAO {
         }
         return cliente;
 
-	}
-	
-	public Cliente detalharClienteById(int id) throws SQLException {
-		Statement st = DatabaseManager.getConnection().createStatement();
-		Cliente cliente = new Cliente();
-		List<Pedido> pedidos = new ArrayList<Pedido>();
-		ResultSet rs = st.executeQuery("SELECT * FROM CLIENTE WHERE COD_CLIENTE = " + id +"");
-		while (rs.next()) {
-			pedidos.add(new Pedido());
-			cliente.setPedidos(pedidos);
-			
-		}
-		return cliente;
 	}
 	
 	public Cliente[] findAllOnFormatArray() {
