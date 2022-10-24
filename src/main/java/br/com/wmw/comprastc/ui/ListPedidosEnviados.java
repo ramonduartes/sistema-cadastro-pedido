@@ -4,33 +4,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.wmw.comprastc.api.PedidoAPI;
 import br.com.wmw.comprastc.dao.ClienteDAO;
-import br.com.wmw.comprastc.dao.PedidoDAO;
 import br.com.wmw.comprastc.domain.Cliente;
 import br.com.wmw.comprastc.domain.Pedido;
-import br.com.wmw.comprastc.exception.PersistenceException;
 import br.com.wmw.comprastc.service.PedidoService;
 import br.com.wmw.comprastc.util.Colors;
-import br.com.wmw.comprastc.util.Images;
 import totalcross.ui.Button;
 import totalcross.ui.Container;
 import totalcross.ui.Label;
 import totalcross.ui.MainWindow;
 import totalcross.ui.ScrollContainer;
-import totalcross.ui.dialog.MessageBox;
 
 public class ListPedidosEnviados extends ScrollContainer {
 
-	private Container containerTopo, containerPedidos, containerActions;
-	private Button btVoltar, btEditar, btDeletar, btSincronizar;
+	private Container containerTopo, containerPedidos;
+	private Button btVoltar;
 	private Label lbPedidos, lbNome, lbPedido, lbStatus, lbDataEmissao, lbDataEntrega;
 	private List<Pedido> pedidos = new ArrayList<>();
 	private ClienteDAO clienteDAO = new ClienteDAO();
-	private PedidoDAO pedidoDAO = new PedidoDAO();
 	private PedidoService pedidoService = new PedidoService();
-	private Cliente cliente = new Cliente();
-	private PedidoAPI pedidoAPI = new PedidoAPI();
+	Cliente cliente = new Cliente();
+	
 
 	public ListPedidosEnviados() {
 

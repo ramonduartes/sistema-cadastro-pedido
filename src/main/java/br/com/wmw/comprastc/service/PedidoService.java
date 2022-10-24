@@ -11,10 +11,12 @@ import br.com.wmw.comprastc.domain.ItemPedido;
 import br.com.wmw.comprastc.domain.Pedido;
 import br.com.wmw.comprastc.domain.Produto;
 import br.com.wmw.comprastc.domain.StatusPedido;
+import br.com.wmw.comprastc.dto.PedidoDTO;
 import br.com.wmw.comprastc.exception.PersistenceException;
 import br.com.wmw.comprastc.util.DateUtils;
 import totalcross.sys.Settings;
 import totalcross.ui.dialog.MessageBox;
+import totalcross.util.InvalidDateException;
 
 public class PedidoService {
 
@@ -46,6 +48,11 @@ public class PedidoService {
 		return pedidosEnviados;
 
 	} 
+
+	public void updatePedidoEnviado(PedidoDTO pedido) throws PersistenceException {
+		pedido.setStatusPedido("ENVIADO");
+		new PedidoDAO().updatePedidoDTO(pedido);
+	}
 
 	public String retornaListaProdutos(Pedido pedido) {
 		String itens = "";
@@ -126,29 +133,6 @@ public class PedidoService {
 	}
 
 
-	public void adicionarItens(Pedido pedido, List<ItemPedido> itens) throws SQLException {
-
-		if (pedido.getItens().isEmpty()) {
-			itens = itemPedidoDAO.listarItemPorId(pedido.getCodigoPedido());
-			pedido = pedidoDAO.detalharPedido(pedido.getCodigoPedido());
-			for (ItemPedido item: itens) {
-				pedido.getItens().add(item);
-
-			}
-		}
-	}
-
-	public Pedido inicializarPedido(Pedido pedido) {
-		PedidoDAO pedidoDAO = new PedidoDAO();
-		try {
-			pedido = pedidoDAO.detalharPedido(pedido.getCodigoPedido());
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		return pedido;
-	}
-
-
 	public Pedido deletarItem(int id, Pedido pedido, ItemPedido itemPedido) {
 		try {
 			if (itemPedidoDAO.retornaExisteId(id) != -1) {
@@ -169,17 +153,12 @@ public class PedidoService {
 
 
 
-	public Boolean verificaDataEntrega(String dataEntrega, Pedido pedido) throws PersistenceException {
+	public Boolean verificaDataEntrega(String dataEntrega, Pedido pedido) throws PersistenceException, InvalidDateException {
 		if (dataEntrega.isEmpty()) {
-			MessageBox mb = new MessageBox("Mensagem", "Insira uma data!", new String[]{"Fechar"});
-			mb.popup();
 			return false;
 		} 
 		if(!DateUtils.isDataAtualOuFutura(dataEntrega, Settings.DATE_DMY)) {
-			MessageBox mb = new MessageBox("Mensagem", "Data precisa ser maior ou igual a atual", new String[]{"Fechar"});
-			mb.popup();
 			return false;
-
 		}	
 		pedido.setDataEntrega(dataEntrega);
 		return true;
@@ -197,7 +176,6 @@ public class PedidoService {
 			throw new RuntimeException(e);
 		}
 	}
-
 
 }
 

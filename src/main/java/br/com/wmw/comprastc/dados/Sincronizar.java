@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import br.com.wmw.comprastc.api.PedidoAPI;
 import br.com.wmw.comprastc.dao.ClienteDAO;
 import br.com.wmw.comprastc.dao.ProdutoDAO;
 import br.com.wmw.comprastc.dto.ClienteDTO;
@@ -24,10 +23,10 @@ import totalcross.ui.dialog.ProgressBox;
 public class Sincronizar extends Thread {
 	
 
-	private PedidoAPI pedidoAPI = new PedidoAPI();
 	
-   public void run()
-   {
+	
+   public void run() {
+   
       ProgressBox pb = new ProgressBox(null,"Sincronizando dados...",null);
       pb.transitionEffect = Window.TRANSITION_NONE;
       try

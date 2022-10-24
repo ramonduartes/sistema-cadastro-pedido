@@ -5,7 +5,6 @@ import java.util.List;
 
 import br.com.wmw.comprastc.dao.ProdutoDAO;
 import br.com.wmw.comprastc.domain.ItemPedido;
-import br.com.wmw.comprastc.domain.Pedido;
 import br.com.wmw.comprastc.domain.Produto;
 import totalcross.ui.dialog.MessageBox;
 	

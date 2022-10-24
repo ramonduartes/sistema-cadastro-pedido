@@ -38,8 +38,9 @@ public class TelaCadastroPedido extends ScrollContainer {
 			this.pedido.setCodigoCliente(cliente.getId());
 		}
 	
-	public TelaCadastroPedido(ItemPedido itemPedido) {
+	public TelaCadastroPedido(ItemPedido itemPedido, Pedido pedido) {
 		this.item = itemPedido;
+		this.pedido = pedido;
 	}
 
 	public void initUI() {
@@ -178,6 +179,7 @@ public class TelaCadastroPedido extends ScrollContainer {
 
             if (service.verificaSeTemUmItemNoPedido(item)){
                 if(service.verificaQuantidadeMinPedido(item)) {
+                	pedido.getItens().remove(item);
                 	pedido.getItens().add(item);
                 	item = new ItemPedido();
                     

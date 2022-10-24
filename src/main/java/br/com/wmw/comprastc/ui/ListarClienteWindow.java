@@ -40,8 +40,7 @@ public class ListarClienteWindow extends ScrollContainer {
 
 		Images.carregarImagens(fmH);
 		containerHeader = new Container();
-		add(containerHeader, LEFT+MaterialConstants.BORDER_SPACING, TOP+MaterialConstants.BORDER_SPACING, 
-				FILL-MaterialConstants.BORDER_SPACING, PARENTSIZE+10);
+		add(containerHeader, LEFT, TOP, FILL, FILL);
 
 
 		clienteImage = new ImageControl(Images.clienteRecente);

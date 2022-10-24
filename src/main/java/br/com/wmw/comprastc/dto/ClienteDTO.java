@@ -70,19 +70,13 @@ public class ClienteDTO {
 		this.nome = nome;
 	}
 
-	 @Override
-	    public String toString() {
-	        final StringBuffer sb = new StringBuffer("ClienteDTO{");
-	        sb.append("id=").append(id);
-	        sb.append(", nome='").append(nome).append('\'');
-	        sb.append(", email='").append(email).append('\'');
-	        sb.append(", telefone'").append(telefone).append('\'');
-	        sb.append(", tipoPessoa='").append(tipoPessoa).append('\'');
-	        sb.append(", cnpj_cpf='").append(cnpj_cpf).append('\'');
-	        sb.append(", pedidos=").append(pedidos);
-	        sb.append('}');
-	        return sb.toString();
-	    }
+	@Override
+	public String toString() {
+		return "ClienteDTO [id=" + id + ", nome=" + nome + ", email=" + email + ", telefone=" + telefone
+				+ ", tipoPessoa=" + tipoPessoa + ", cnpj_cpf=" + cnpj_cpf + ", pedidos=" + pedidos + "]";
+	}
+
+	
 	
 	
 

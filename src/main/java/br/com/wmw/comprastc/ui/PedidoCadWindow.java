@@ -8,12 +8,16 @@ import br.com.wmw.comprastc.domain.Pedido;
 import br.com.wmw.comprastc.exception.PersistenceException;
 import br.com.wmw.comprastc.service.PedidoService;
 import br.com.wmw.comprastc.util.Colors;
+import br.com.wmw.comprastc.util.DateUtils;
+import totalcross.sys.Settings;
 import totalcross.ui.Button;
 import totalcross.ui.Container;
 import totalcross.ui.Edit;
 import totalcross.ui.Label;
 import totalcross.ui.MainWindow;
 import totalcross.ui.ScrollContainer;
+import totalcross.ui.dialog.MessageBox;
+import totalcross.util.InvalidDateException;
 
 	public class PedidoCadWindow extends ScrollContainer {
 		
@@ -22,7 +26,7 @@ import totalcross.ui.ScrollContainer;
 	    private Label lbPedido, lbValorTotal, lbDataEntrega, lbProduto;
 	    private Edit editDataEntrega;
 	    private Pedido pedido;
-	    private List<ItemPedido> itens = new ArrayList<>();
+	    List<ItemPedido> itens = new ArrayList<>();
 	    private PedidoService pedidoService = new PedidoService();
 	    
 	    public PedidoCadWindow(Pedido pedido) {
@@ -90,15 +94,28 @@ import totalcross.ui.ScrollContainer;
 	        btnSalvar.setBorder(Container.BORDER_ROUNDED);
 	        containerActions.add(btnSalvar, RIGHT, CENTER, PARENTSIZE + 47 , PARENTSIZE + 95);
 	        btnSalvar.addPressListener((e) -> {
-	        	
-					try {
-						if (pedidoService.verificaDataEntrega(editDataEntrega.getText(), pedido)) {
-						pedidoService.inserirPedido(pedido);
-						MainWindow.getMainWindow().swap(new PedidoViewWindow(pedido));
+
+	        	try {
+	        		String dataEntrega = editDataEntrega.getText();
+	        		
+	        		try {
+						if (pedidoService.verificaDataEntrega(dataEntrega, pedido)) {
+							pedidoService.inserirPedido(pedido);
+							MainWindow.getMainWindow().swap(new PedidoViewWindow(pedido));
+						} else if (dataEntrega.isEmpty()) {
+							MessageBox mb = new MessageBox("Mensagem", "Insira uma data!", new String[]{"Fechar"});
+							mb.popup();
+						} else {
+							MessageBox mb = new MessageBox("Mensagem", "Data precisa ser maior ou igual a atual", new String[]{"Fechar"});
+							mb.popup();
 						}
-					} catch (PersistenceException e1) {
-						e1.printStackTrace();
+					} catch (InvalidDateException e1) {
+						MessageBox mb = new MessageBox("Mensagem", "Data inválida!", new String[]{"Fechar"});
+						mb.popup();
 					}
+	        	} catch (PersistenceException e1) {
+	        		e1.printStackTrace();
+	        	}
 	        });
 
 

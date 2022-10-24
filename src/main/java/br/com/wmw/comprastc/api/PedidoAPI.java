@@ -23,6 +23,7 @@ public class PedidoAPI {
 	public static final String CONTENT_TYPE_JSON = "application/json";
     private PedidoDAO pedidoDAO = new PedidoDAO();
     private ItemPedidoDAO itemDAO = new ItemPedidoDAO();
+    private PedidoService pedidoService = new PedidoService();
 
     public int enviarPedidosBackEnd() throws PersistenceException {
 
@@ -62,7 +63,7 @@ public class PedidoAPI {
                     response.responseCode = httpStream.responseCode;
 
                     if (httpStream.responseCode == 200) {
-                       pedidoDAO.updatePedidoEnviado(pedido);
+                       pedidoService.updatePedidoEnviado(pedido);
                     }
                     else {
                         throw new RuntimeException(data);

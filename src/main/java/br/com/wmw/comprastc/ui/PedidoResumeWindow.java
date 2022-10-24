@@ -20,8 +20,8 @@ import totalcross.ui.dialog.MessageBox;
 public class PedidoResumeWindow extends Container {
 	
 	private Container containerFooter, containerTopo, containerActions, containerBody;
-	private Button btVoltar, btSalvar, btAdicionar, btEditar, btDeletar;
-	private Label lbItensPedido, lbValor, lbQuantidade, lbListaItens;
+	private Button btVoltar, btSalvar, btAdicionar, btDeletar;
+	private Label lbItensPedido, lbValor, lbQuantidade, lbListaItens, lbDesconto;
 	private Pedido pedido;
 	private PedidoService pedidoService = new PedidoService();
 	private List<ItemPedido> listaItens = new ArrayList<>();
@@ -59,34 +59,30 @@ public class PedidoResumeWindow extends Container {
         	containerBody.borderColor = Colors.GRAY;
         	containerBody.setBorderStyle(Container.BORDER_TOP);
         	containerBody.setInsets(35, 35, 25, 25);
-            add(containerBody, LEFT, AFTER, FILL, PARENTSIZE + 15);
+            add(containerBody, LEFT, AFTER, FILL, PARENTSIZE + 50);
             
 	         try {
 	        	 	Produto produto = produtoDAO.buscaProdutoPorId(itemPedido.getCodigoProduto());
-	                lbItensPedido = new Label(produto.getNome());
+	                lbItensPedido = new Label("Produto: " + produto.getNome());
 	                containerBody.add(lbItensPedido, LEFT, SAME, PREFERRED, PREFERRED);
 	            } catch (SQLException e) {
 	                throw new RuntimeException(e);
 	            }
 
-            lbQuantidade = new Label("Quantidade:" + itemPedido.getQuantidade());
+            lbQuantidade = new Label("Quantidade: " + itemPedido.getQuantidade());
             containerBody.add(lbQuantidade, LEFT, AFTER, PREFERRED, PREFERRED);
 
             lbValor = new Label("Total: R$ " + itemPedido.getTotalItem());
             containerBody.add(lbValor, LEFT, AFTER, PREFERRED, PREFERRED);
-      
+            
+            lbDesconto = new Label("Desconto:" + itemPedido.getDesconto() + "% ");
+            containerBody.add(lbDesconto, LEFT, AFTER, PREFERRED, PREFERRED);
 
         containerActions = new Container();
         containerActions.setInsets(0, 25, 50, 0);
         add(containerActions, RIGHT, SAME, PARENTSIZE + 35, PARENTSIZE + 22);
 
-        btEditar = new Button(Images.iconeEditar);
-        btEditar.setBorder(Container.BORDER_NONE);
-        containerActions.add(btEditar, LEFT, AFTER, PREFERRED, PREFERRED);
-        btEditar.addPressListener((e) -> {
-            MainWindow.getMainWindow().swap(new TelaCadastroPedido(itemPedido));
-        });
-
+       
         btDeletar = new Button(Images.iconeDeletar);
         btDeletar.setBorder(Container.BORDER_NONE);
         containerActions.add(btDeletar, RIGHT, SAME, PREFERRED, PREFERRED);

@@ -67,7 +67,7 @@ public class ClienteDAO {
 		try{
 			Connection connection = DatabaseManager.getConnection();
 			try {
-				final PreparedStatement pst = connection.prepareStatement("SELECT COD_CLIENTE, NOME FROM CLIENTE WHERE COD_CLIENTE = ?");
+				 PreparedStatement pst = connection.prepareStatement("SELECT COD_CLIENTE, NOME FROM CLIENTE WHERE COD_CLIENTE = ?");
 				try {
 					pst.setInt(1, codigo);
 					try(ResultSet rs = pst.executeQuery()){
@@ -89,25 +89,25 @@ public class ClienteDAO {
 	}
 
 	public Cliente detalharCliente(int id) throws SQLException {
-        Connection dbcon = DatabaseManager.getConnection();
+        Connection connection = DatabaseManager.getConnection();
 
         Cliente cliente = null;
         List<Pedido> pedidos = new ArrayList<>();
-        ResultSet rsTemp = null;
         try {
-            rsTemp = dbcon.createStatement().executeQuery("select * from cliente where COD_CLIENTE=" + id + "");
-            while (rsTemp.next()) {
-                 cliente = new Cliente(rsTemp);
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM CLIENTE WHERE COD_CLIENTE=" + id + "");
+            while (rs.next()) {
+                 cliente = new Cliente();
+                 cliente.setId(rs.getInt("COD_CLIENTE"));
             }
-            rsTemp = dbcon.createStatement().executeQuery("select * from pedido where COD_CLIENTE=" + id + "");
-            while (rsTemp.next()) {
+            rs = connection.createStatement().executeQuery("SELECT * FROM PEDIDO WHERE COD_CLIENTE=" + id + "");
+            while (rs.next()) {
                 pedidos.add(new Pedido());
                 cliente.setPedidos(pedidos);
             }
 
 
         } finally {
-            dbcon.close();
+            connection.close();
         }
         return cliente;
 
@@ -131,7 +131,7 @@ public class ClienteDAO {
 			Vm.debug(e.getMessage());
 		}
 		Cliente[] clientesArray = new Cliente[clientesList.size()];
-		for(int i = 0; i < clientesList.size();i++) {
+		for(int i = 0; i < clientesList.size(); i++) {
 			clientesArray[i] = clientesList.get(i);
 		}
 		return clientesArray;

@@ -113,23 +113,5 @@ public class ProdutoDAO {
 		return produto;
 	}
 
-	public String nomeProduto(long codigoProduto) throws SQLException {
-		 Connection dbcon = DatabaseManager.getConnection();
-
-	        String nome = null;
-	        ResultSet rsTemp = null;
-	        try {
-	            rsTemp = dbcon.createStatement().executeQuery("select nome from produto where COD_PRODUTO='" + codigoProduto + "'");
-	            while (rsTemp.next()) {
-	                nome = rsTemp.getString("nome");
-	            }
-	        } finally {
-	            dbcon.close();
-	        }
-
-	        return nome;
-
-	    }
-
 	 
 }

@@ -34,7 +34,7 @@ public class TelaMenu extends Container {
 	        Container containerBody = new Container();
 	        containerBody.transparentBackground = true;
 	        containerHeader.add(containerBody, AFTER + MaterialConstants.BORDER_SPACING, TOP + 90, FILL - MaterialConstants.BORDER_SPACING,
-	                PARENTSIZE + 720);
+	                PARENTSIZE );
 
 	        Button btPedidos = new Button("Pedidos em Aberto");
 	        btPedidos.setBackForeColors(Colors.BLUE, Colors.WHITE);

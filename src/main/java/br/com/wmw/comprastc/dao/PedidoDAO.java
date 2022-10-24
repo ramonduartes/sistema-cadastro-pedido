@@ -21,14 +21,17 @@ public class PedidoDAO {
 
 
 	public void inserirPedido(Pedido pedido) throws SQLException, PersistenceException {
+		
 		PreparedStatement ps = DatabaseManager.getConnection().prepareStatement("INSERT INTO PEDIDO (DATA_EMISSAO, DATA_ENTREGA, TOTAL_PEDIDO, COD_CLIENTE, STATUS_PEDIDO) VALUES (?, ?, ?, ?, ?)");
 		ps.setString(1, pedido.getDataEmissao());
 		ps.setString(2, pedido.getDataEntrega());
 		ps.setDouble(3, pedido.getTotalPedido());
 		ps.setInt(4, pedido.getCodigoCliente());
 		ps.setString(5, pedido.getStatusPedido().toString());
+		
 		int affectedRows = ps.executeUpdate();
 		if(affectedRows == 0) throw new PersistenceException("Erro ao inserir o pedido.");
+		
 		ps.close();
 	}
 
@@ -73,15 +76,18 @@ public class PedidoDAO {
 	}
 
 	public List<Pedido> listarPedidoPorCodigo(Integer id) throws SQLException {
+		
 		Connection connection = DatabaseManager.getConnection();
 		List<Pedido> pedidos = new ArrayList<Pedido>();
+		try {
 		Statement st = connection.createStatement();
 		ResultSet rs = st.executeQuery("SELECT * FROM PEDIDO WHERE COD_CLIENTE =" + id + "");
 		Pedido pedido = new Pedido();
 		while (rs.next()) {
 			pedidos.add(pedido);
+		}
+		} finally {
 			connection.close();
-
 		}
 		return pedidos;
 
@@ -125,11 +131,6 @@ public class PedidoDAO {
 		return pedidosList;	
 	}
 
-
-	public void updatePedidoEnviado(PedidoDTO pedido) throws PersistenceException {
-		pedido.setStatusPedido("ENVIADO");
-		new PedidoDAO().updatePedidoDTO(pedido);
-	}
 
 	public void update(Pedido pedido) throws PersistenceException {
 		try {
@@ -188,41 +189,17 @@ public class PedidoDAO {
 
 	}
 
-	public Pedido detalharPedido(int id) throws SQLException {
-		Connection dbcon = DatabaseManager.getConnection();
-
-		Pedido pedido = null;
-		ResultSet rs = null;
-
-		rs = dbcon.createStatement().executeQuery("SELECT * FROM PEDIDO WHERE COD_PEDIDO=" + id + "");
-		while (rs.next()) {
-			pedido = new Pedido();
-			pedido.setCodigoCliente(rs.getInt("COD_CLIENTE"));
-			pedido.setCodigoPedido(rs.getInt("COD_PEDIDO"));
-			pedido.setStatusPedido(StatusPedido.getByNome(rs.getString("STATUS_PEDIDO")));
-			pedido.setDataEmissao(rs.getString("DATA_EMISSAO"));
-			pedido.setDataEntrega(rs.getString("DATA_ENTREGA"));
-			pedido.setTotalPedido(rs.getDouble("TOTAL_PEDIDO"));
-
-		}
-
-
-		return pedido;
-
-	}
-
 	public int retornaUltimoId() throws SQLException {
-		Connection dbcon = DatabaseManager.getConnection();
+		Connection connection = DatabaseManager.getConnection();
 
 		int id = 0;
-		ResultSet rsTemp = null;
 		try {
-			rsTemp = dbcon.createStatement().executeQuery("SELECT MAX(COD_PEDIDO) AS COD_PEDIDO FROM PEDIDO");
-			while (rsTemp.next()) {
-				id = rsTemp.getInt("COD_PEDIDO");
+			ResultSet rs = connection.createStatement().executeQuery("SELECT MAX(COD_PEDIDO) AS COD_PEDIDO FROM PEDIDO");
+			while (rs.next()) {
+				id = rs.getInt("COD_PEDIDO");
 			}
 		} finally {
-			dbcon.close();
+			connection.close();
 		}
 
 		return id;

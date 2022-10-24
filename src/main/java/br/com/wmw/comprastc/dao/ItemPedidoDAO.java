@@ -13,34 +13,34 @@ import totalcross.sql.Statement;
 import totalcross.sys.Vm;
 
 public class ItemPedidoDAO {
-	
+
 	public List<ItemPedido> listarItemPorId(int id) throws SQLException {
-        Connection connection = DatabaseManager.getConnection();
+		Connection connection = DatabaseManager.getConnection();
 
-        List<ItemPedido> items = new ArrayList<>();
-        Statement st = connection.createStatement();
-        try {
-        	ResultSet rs = st.executeQuery("SELECT * FROM ITEMPEDIDO WHERE COD_PEDIDO =" + id + "");
-            while (rs.next()) {
-               items.add(new ItemPedido(rs.getInt("COD_PEDIDO")));
-            }
-        } finally {
-            connection.close();
-        }
+		List<ItemPedido> itens = new ArrayList<>();
+		Statement st = connection.createStatement();
+		try {
+			ResultSet rs = st.executeQuery("SELECT * FROM ITEMPEDIDO WHERE COD_PEDIDO =" + id + "");
+			while (rs.next()) {
+				itens.add(new ItemPedido(rs.getInt("COD_PEDIDO")));
+			}
+		} finally {
+			connection.close();
+		}
 
-        return items;
+		return itens;
 
-    }
-	
+	}
+
 	public List<ItemPedidoDTO> listarItemPorIdDTO(int id) throws SQLException {
-        Connection connection = DatabaseManager.getConnection();
+		Connection connection = DatabaseManager.getConnection();
 
-        List<ItemPedidoDTO> itens = new ArrayList<>();
-        Statement st = connection.createStatement();
-        try {
-        	ResultSet rs = st.executeQuery("SELECT COD_ITEMPEDIDO, QUANTIDADE, PRECO_UNITARIO, DESC_PORCENTO, TOTAL, COD_PRODUTO, COD_PEDIDO FROM ITEMPEDIDO WHERE COD_PEDIDO = " + id);
-            while (rs.next()) {
-            	ItemPedidoDTO item = new ItemPedidoDTO();
+		List<ItemPedidoDTO> itens = new ArrayList<>();
+		Statement st = connection.createStatement();
+		try {
+			ResultSet rs = st.executeQuery("SELECT COD_ITEMPEDIDO, QUANTIDADE, PRECO_UNITARIO, DESC_PORCENTO, TOTAL, COD_PRODUTO, COD_PEDIDO FROM ITEMPEDIDO WHERE COD_PEDIDO = " + id);
+			while (rs.next()) {
+				ItemPedidoDTO item = new ItemPedidoDTO();
 				item.setId(rs.getInt("COD_ITEMPEDIDO"));
 				item.setQuantidade(rs.getInt("QUANTIDADE"));
 				item.setPrecoUnitario(rs.getDouble("PRECO_UNITARIO"));
@@ -49,31 +49,31 @@ public class ItemPedidoDAO {
 				item.setIdProduto(rs.getInt("COD_PRODUTO"));
 				item.setIdPedido(rs.getInt("COD_PEDIDO"));
 				itens.add(item);
-            }
-        } finally {
-            connection.close();
-        }
+			}
+		} finally {
+			connection.close();
+		}
 
-        return itens;
+		return itens;
 
-    }
+	}
 
 	public int retornaExisteId(Integer id) throws SQLException {
-		  Connection connection = DatabaseManager.getConnection();
+		Connection connection = DatabaseManager.getConnection();
 
-	        int retorno = -1;
-	        try {
-	            ResultSet rs = connection.createStatement().executeQuery("SELECT COD_ITEMPEDIDO AS COD_ITEMPEDIDO FROM ITEMPEDIDO WHERE COD_ITEMPEDIDO=" + id + "");
-	            while (rs.next()) {
-	                retorno = rs.getInt("COD_ITEMPEDIDO");
-	            }
-	        } finally {
-	            connection.close();
-	        }
+		int retorno = -1;
+		try {
+			ResultSet rs = connection.createStatement().executeQuery("SELECT COD_ITEMPEDIDO AS COD_ITEMPEDIDO FROM ITEMPEDIDO WHERE COD_ITEMPEDIDO=" + id + "");
+			while (rs.next()) {
+				retorno = rs.getInt("COD_ITEMPEDIDO");
+			}
+		} finally {
+			connection.close();
+		}
 
-	        return retorno;
+		return retorno;
 
-	    }
+	}
 
 	public List<ItemPedido> findByCodigoPedido(Integer codigoPedido) {
 		List<ItemPedido> itens = new ArrayList<>();
@@ -100,35 +100,35 @@ public class ItemPedidoDAO {
 		} catch (SQLException e) {
 			Vm.debug(e.getMessage());
 		}
-		
+
 		return itens;
 	}
 
 	public void inserirItem(ItemPedido itemPedido) throws SQLException {
-        Connection dbcon = DatabaseManager.getConnection();
+		Connection dbcon = DatabaseManager.getConnection();
 
-        try {
-            dbcon.createStatement().execute("INSERT INTO ITEMPEDIDO (COD_PEDIDO, COD_PRODUTO, QUANTIDADE, PRECO_UNITARIO, DESC_PORCENTO, TOTAL) values ("
-                    + itemPedido.getCodigoPedido() + ",	 "
-                    + itemPedido.getCodigoProduto() + ", "
-                    + itemPedido.getQuantidade() + ", "
-                    + itemPedido.getPrecoUnitario() + ", "
-                    + itemPedido.getDesconto() + ", "
-                    + itemPedido.getTotalItem() + ")");
-        } finally {
-            dbcon.close();
-        }
-    }
-
-	public void deletarItem(int id) throws SQLException {
-        Connection dbcon = DatabaseManager.getConnection();
-        try {
-            dbcon.createStatement().execute("DELETE FROM ITEMPEDIDO WHERE COD_ITEMPEDIDO=" + id + "");
-        } finally {
-            dbcon.close();
-        }
+		try {
+			dbcon.createStatement().execute("INSERT INTO ITEMPEDIDO (COD_PEDIDO, COD_PRODUTO, QUANTIDADE, PRECO_UNITARIO, DESC_PORCENTO, TOTAL) values ("
+					+ itemPedido.getCodigoPedido() + ",	 "
+					+ itemPedido.getCodigoProduto() + ", "
+					+ itemPedido.getQuantidade() + ", "
+					+ itemPedido.getPrecoUnitario() + ", "
+					+ itemPedido.getDesconto() + ", "
+					+ itemPedido.getTotalItem() + ")");
+		} finally {
+			dbcon.close();
+		}
 	}
 
-	
+	public void deletarItem(int id) throws SQLException {
+		Connection dbcon = DatabaseManager.getConnection();
+		try {
+			dbcon.createStatement().execute("DELETE FROM ITEMPEDIDO WHERE COD_ITEMPEDIDO=" + id + "");
+		} finally {
+			dbcon.close();
+		}
+	}
+
+
 
 }

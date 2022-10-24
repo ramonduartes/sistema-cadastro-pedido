@@ -29,7 +29,7 @@ public class ListPedidosFinalizados extends ScrollContainer {
 	private ClienteDAO clienteDAO = new ClienteDAO();
 	private PedidoDAO pedidoDAO = new PedidoDAO();
 	private PedidoService pedidoService = new PedidoService();
-	private Cliente cliente = new Cliente();
+	Cliente cliente = new Cliente();
 	private PedidoAPI pedidoAPI = new PedidoAPI();
 
 	public ListPedidosFinalizados() {
