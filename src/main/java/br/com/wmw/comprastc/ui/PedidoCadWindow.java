@@ -1,5 +1,6 @@
 package br.com.wmw.comprastc.ui;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +9,6 @@ import br.com.wmw.comprastc.domain.Pedido;
 import br.com.wmw.comprastc.exception.PersistenceException;
 import br.com.wmw.comprastc.service.PedidoService;
 import br.com.wmw.comprastc.util.Colors;
-import br.com.wmw.comprastc.util.DateUtils;
-import totalcross.sys.Settings;
 import totalcross.ui.Button;
 import totalcross.ui.Container;
 import totalcross.ui.Edit;
@@ -59,7 +58,11 @@ import totalcross.util.InvalidDateException;
 	        lbValorTotal = new Label("Valor Total do Pedido: R$ " + pedido.getTotalPedido() );
 	        containerCadastro.add(lbValorTotal, LEFT, AFTER, PREFERRED, PREFERRED);
 
-	        lbProduto = new Label(pedidoService.retornaListaProdutos(pedido));
+	        try {
+				lbProduto = new Label(pedidoService.retornaListaProdutos(pedido));
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
 	        containerCadastro.add(lbProduto, LEFT, AFTER, PREFERRED, PREFERRED);
 
 	        lbDataEntrega = new Label("Data Entrega: " );

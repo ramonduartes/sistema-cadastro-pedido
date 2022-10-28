@@ -73,8 +73,12 @@ public class ListarPedidoWindow extends ScrollContainer {
 	        containerCliente.setInsets(25, 25, 25, 25);
 	        add(containerCliente, LEFT, AFTER, FILL, PARENTSIZE + 20);
 
-	        
-	        Cliente cliente = clienteDAO.findByCodigoCliente(pedido.getCodigoCliente());
+			try {
+				cliente = clienteDAO.findByCodigoCliente(pedido.getCodigoCliente());
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+			
 			lbNome = new Label("Cliente: " + cliente.getNome());
 			containerCliente.add(lbNome, SAME, AFTER, PREFERRED, PREFERRED);
 	        

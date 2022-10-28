@@ -54,7 +54,7 @@ import totalcross.util.InvalidDateException;
 	    
 	    @Test
 	    void deveriaRetornarVerdadeiroDataIgualAHoje() throws PersistenceException, InvalidDateException {
-	    	Boolean resultado = pedidoService.verificaDataEntrega("21/10/2022", criarPedidoComDataEntrega("20/10/2022"));
+	    	Boolean resultado = pedidoService.verificaDataEntrega("25/10/2022", criarPedidoComDataEntrega("20/10/2022"));
 	    	assertEquals(true, resultado);
 	    }
 	    

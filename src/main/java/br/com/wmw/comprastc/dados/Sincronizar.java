@@ -10,6 +10,7 @@ import br.com.wmw.comprastc.dao.ClienteDAO;
 import br.com.wmw.comprastc.dao.ProdutoDAO;
 import br.com.wmw.comprastc.dto.ClienteDTO;
 import br.com.wmw.comprastc.dto.ProdutoDTO;
+import br.com.wmw.comprastc.exception.PersistenceException;
 import br.com.wmw.comprastc.util.Erro;
 import totalcross.io.ByteArrayStream;
 import totalcross.io.IOException;
@@ -48,7 +49,7 @@ public class Sincronizar extends Thread {
    }
 
 
-   private void receberClientes() throws SQLException {
+   private void receberClientes() throws SQLException, PersistenceException {
 	   String url = "http://localhost:8080/clientes";
 	   try {
 
@@ -90,7 +91,7 @@ public class Sincronizar extends Thread {
 	
 }
    
-   private void receberProdutos() throws SQLException {
+   private void receberProdutos() throws SQLException, PersistenceException {
 	   String url = "http://localhost:8080/produtos";
 	   try {
 

@@ -1,10 +1,11 @@
 package br.com.wmw.comprastc.exception;
 
-public class PersistenceException extends RuntimeException {
+public class ConnectionException extends RuntimeException {
 	
 	private static final long serialVersionUID = 1L;
 
-	public PersistenceException(String message) {
+	public ConnectionException(String message) {
 		super(message);
 	}
 }
+

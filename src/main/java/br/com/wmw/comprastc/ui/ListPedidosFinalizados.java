@@ -78,7 +78,11 @@ public class ListPedidosFinalizados extends ScrollContainer {
 			add(containerPedidos, LEFT, AFTER, FILL, PARENTSIZE + 20);
 
 
-			Cliente cliente = clienteDAO.findByCodigoCliente(pedido.getCodigoCliente());
+			try {
+				cliente = clienteDAO.findByCodigoCliente(pedido.getCodigoCliente());
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
 			lbNome = new Label("Cliente: " + cliente.getNome());
 			containerPedidos.add(lbNome, SAME, AFTER, PREFERRED, PREFERRED);
 

@@ -1,5 +1,6 @@
 package br.com.wmw.comprastc.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import totalcross.ui.dialog.MessageBox;
 	    private ProdutoDAO produtoDAO = new ProdutoDAO();
 	    private List<Produto> produtos = new ArrayList<>();
 
-	    public String[] retornaListaProdutos() {
+	    public String[] retornaListaProdutos() throws SQLException {
 	        produtos = produtoDAO.buscarProdutos();
 	        String items[] = new String[produtos.size()];
 	        int i = 0;
@@ -35,9 +36,12 @@ import totalcross.ui.dialog.MessageBox;
 		    	
 		    	double descontoDouble = Double.valueOf(desconto);
 		    	double totalDesconto = item.getPrecoUnitario() * (descontoDouble / 100);
-				item.setTotalItem(quantidadeInt * (item.getPrecoUnitario() - totalDesconto ));
+				double totalItem = quantidadeInt * (item.getPrecoUnitario() - totalDesconto );
+				item.setTotalItem(Math.round(totalItem * 100.0)/100.0);
 				item.setQuantidade(quantidadeInt);
-				item.setDesconto(descontoDouble);	    	}
+				item.setDesconto(descontoDouble);	   
+				
+	    	}
 	    	
 			
 			return item;
@@ -63,6 +67,17 @@ import totalcross.ui.dialog.MessageBox;
 	            return false;
 	        }
 	    }
+		
+		public Boolean verificaSeNaoTemDescontoIgualOuMaiorQue100PorCento(ItemPedido itempedido) {
+			if (itempedido.getDesconto() <= 99) {
+				return true;
+			} else {
+				MessageBox mbDesconto = new MessageBox("Mensagem", "Nao é permitido desconto igual ou superior a 100%", new String[] { "Fechar" });
+				mbDesconto.popup();
+				return false;
+			}
+			
+		}
 
     }
 

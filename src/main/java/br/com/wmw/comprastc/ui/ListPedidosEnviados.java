@@ -70,7 +70,11 @@ public class ListPedidosEnviados extends ScrollContainer {
 			add(containerPedidos, LEFT, AFTER, FILL, PARENTSIZE + 20);
 
 
-			Cliente cliente = clienteDAO.findByCodigoCliente(pedido.getCodigoCliente());
+			try {
+				cliente = clienteDAO.findByCodigoCliente(pedido.getCodigoCliente());
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			lbNome = new Label("Cliente: " + cliente.getNome());
 			containerPedidos.add(lbNome, SAME, AFTER, PREFERRED, PREFERRED);
 

@@ -15,7 +15,6 @@ import br.com.wmw.comprastc.dto.PedidoDTO;
 import br.com.wmw.comprastc.exception.PersistenceException;
 import br.com.wmw.comprastc.util.DateUtils;
 import totalcross.sys.Settings;
-import totalcross.ui.dialog.MessageBox;
 import totalcross.util.InvalidDateException;
 
 public class PedidoService {
@@ -34,6 +33,7 @@ public class PedidoService {
 		pedidosAberto = pedidoDAO.findAllByStatus(StatusPedido.ABERTO);
 		return pedidosAberto;
 	} 
+	
 
 	public List<Pedido> listarPedidosFechados() throws SQLException {
 		List<Pedido> pedidosFechados;
@@ -49,12 +49,12 @@ public class PedidoService {
 
 	} 
 
-	public void updatePedidoEnviado(PedidoDTO pedido) throws PersistenceException {
+	public void updatePedidoEnviado(PedidoDTO pedido) throws PersistenceException, SQLException {
 		pedido.setStatusPedido("ENVIADO");
 		new PedidoDAO().updatePedidoDTO(pedido);
 	}
 
-	public String retornaListaProdutos(Pedido pedido) {
+	public String retornaListaProdutos(Pedido pedido) throws SQLException {
 		String itens = "";
 		for (ItemPedido item : pedido.getItens()) {
 			for (Produto produto : produtoDAO.buscarProdutos()) {
@@ -69,11 +69,11 @@ public class PedidoService {
 
 
 	public double calculaValorTotal(Pedido pedido) {
-		double sum = 0;
+		double soma = 0;
 		for(ItemPedido item : pedido.getItens()) {
-			sum += item.getTotalItem();
+			soma += item.getTotalItem();
 		}
-		return sum;
+		return soma;
 	}
 
 
@@ -132,27 +132,6 @@ public class PedidoService {
 
 	}
 
-
-	public Pedido deletarItem(int id, Pedido pedido, ItemPedido itemPedido) {
-		try {
-			if (itemPedidoDAO.retornaExisteId(id) != -1) {
-				pedido.getItens().remove(itemPedido);
-				itemPedidoDAO.deletarItem(id);
-				MessageBox mb = new MessageBox("Mensagem", "Item excluído com sucesso.", new String[]{"Fechar"});
-				mb.popup();
-				return pedido;
-			} else {
-				MessageBox mb = new MessageBox("Mensagem", "ERRO: Item não excluído.", new String[]{"Fechar"});
-				mb.popup();
-				return pedido;
-			}
-		} catch (SQLException ex) {
-			throw new RuntimeException(ex);
-		}
-	}
-
-
-
 	public Boolean verificaDataEntrega(String dataEntrega, Pedido pedido) throws PersistenceException, InvalidDateException {
 		if (dataEntrega.isEmpty()) {
 			return false;
@@ -168,6 +147,7 @@ public class PedidoService {
 		return pedido.getItens().size() > 0;
 
 	}
+	
 
 	public void fecharPedido(Pedido pedido){
 		try {
@@ -176,6 +156,5 @@ public class PedidoService {
 			throw new RuntimeException(e);
 		}
 	}
-
 }
 

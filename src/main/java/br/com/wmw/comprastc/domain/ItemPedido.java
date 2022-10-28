@@ -1,5 +1,7 @@
 package br.com.wmw.comprastc.domain;
 
+import java.util.Objects;
+
 public class ItemPedido {
 	
 	private Integer codigoItemPedido;
@@ -77,9 +79,28 @@ public class ItemPedido {
 	public void setTotalItem(double totalItem) {
 		this.totalItem = totalItem;
 	}
-	
-	
 
-	
+	@Override
+	public int hashCode() {
+		return Objects.hash(codigoItemPedido, codigoPedido, codigoProduto, desconto, precoUnitario, quantidade,
+				totalItem);
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ItemPedido other = (ItemPedido) obj;
+		return Objects.equals(codigoItemPedido, other.codigoItemPedido)
+				&& Objects.equals(codigoPedido, other.codigoPedido) && codigoProduto == other.codigoProduto
+				&& Double.doubleToLongBits(desconto) == Double.doubleToLongBits(other.desconto)
+				&& Double.doubleToLongBits(precoUnitario) == Double.doubleToLongBits(other.precoUnitario)
+				&& Objects.equals(quantidade, other.quantidade)
+				&& Double.doubleToLongBits(totalItem) == Double.doubleToLongBits(other.totalItem);
+	}
+	
 }

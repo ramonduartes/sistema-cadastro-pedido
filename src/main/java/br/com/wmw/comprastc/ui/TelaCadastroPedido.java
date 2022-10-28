@@ -1,6 +1,7 @@
 package br.com.wmw.comprastc.ui;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 
 import br.com.wmw.comprastc.dao.ProdutoDAO;
 import br.com.wmw.comprastc.domain.Cliente;
@@ -58,7 +59,11 @@ public class TelaCadastroPedido extends ScrollContainer {
                  messageBox.popup();
 
                  if(messageBox.getPressedButtonIndex() == 0) {
-                     MainWindow.getMainWindow().swap(new ListarClienteWindow());
+                     try {
+						MainWindow.getMainWindow().swap(new ListarClienteWindow());
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
                  }
              });
         lbCadastrarPedido = new Label("Cadastrar Pedido", CENTER, Colors.BLACK, true);
@@ -75,7 +80,11 @@ public class TelaCadastroPedido extends ScrollContainer {
         containerBody.add(lbProduto, LEFT, AFTER, PREFERRED, PREFERRED);
 
         ComboBox.usePopupMenu = false;
-        simpleComboBox = new ComboBox(service.retornaListaProdutos());
+        try {
+			simpleComboBox = new ComboBox(service.retornaListaProdutos());
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
         simpleComboBox.caption = "Produtos";
         simpleComboBox.setBorderStyle(Container.BORDER_LOWERED);
         simpleComboBox.setInsets(5,5,5,5);
@@ -92,7 +101,11 @@ public class TelaCadastroPedido extends ScrollContainer {
         simpleComboBox.addPressListener((e) -> {
             Object obj = simpleComboBox.getSelectedItem();
             String str = obj.toString();
-            produto = produtoDao.buscarProdutoPorNome(str);
+            try {
+				produto = produtoDao.buscarProdutoPorNome(str);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			item = new ItemPedido();
 			item.setCodigoProduto(produto.getId());
 			item.setPrecoUnitario(produto.getPreco());
@@ -134,8 +147,10 @@ public class TelaCadastroPedido extends ScrollContainer {
         containerBody.add(precoTotalItem, SAME, AFTER, FILL, PREFERRED);
 
         editQuantidade.addPressListener((e) -> {
-            item = service.calculaValorTotalItem(editQuantidade.getText(), editDesconto.getText(), item);           
-			precoTotalItem.setText("R$ " + item.getTotalItem() + "");
+            item = service.calculaValorTotalItem(editQuantidade.getText(), editDesconto.getText(), item);     
+            DecimalFormat df = new DecimalFormat();
+            df.applyPattern("R$ #,##0.00");
+			precoTotalItem.setText(df.format(item.getTotalItem()));
         });
         
         editDesconto.addPressListener((e) -> {
@@ -144,7 +159,9 @@ public class TelaCadastroPedido extends ScrollContainer {
             item = service.calculaValorTotalItem(editQuantidade.getText(), editDesconto.getText(), item);    
 
             precoUnitario.setText("R$ " + item.getPrecoUnitario() + "");
-            precoTotalItem.setText("R$ " + item.getTotalItem()+ "");
+            DecimalFormat df = new DecimalFormat();
+            df.applyPattern("R$ #,##0.00");
+            precoTotalItem.setText(df.format(item.getTotalItem()));
 
         });
         
@@ -178,13 +195,15 @@ public class TelaCadastroPedido extends ScrollContainer {
         btnAdicionar.addPressListener((e) -> {
 
             if (service.verificaSeTemUmItemNoPedido(item)){
+            	if (service.verificaSeNaoTemDescontoIgualOuMaiorQue100PorCento(item)) {
                 if(service.verificaQuantidadeMinPedido(item)) {
                 	pedido.getItens().remove(item);
-                	pedido.getItens().add(item);
+					pedido.getItens().add(item);
                 	item = new ItemPedido();
                     
                     MainWindow.getMainWindow().swap(new TelaCadastroPedido(pedido));
                 }
+            }
             }
         });
 

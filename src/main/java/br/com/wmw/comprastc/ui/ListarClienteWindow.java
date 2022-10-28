@@ -1,5 +1,7 @@
 package br.com.wmw.comprastc.ui;
 
+import java.sql.SQLException;
+
 import br.com.wmw.comprastc.dao.ClienteDAO;
 import br.com.wmw.comprastc.domain.Cliente;
 import br.com.wmw.comprastc.service.ClienteService;
@@ -28,7 +30,7 @@ public class ListarClienteWindow extends ScrollContainer {
 
 
 
-	public ListarClienteWindow() {
+	public ListarClienteWindow() throws SQLException {
 
 		ClienteDAO clienteDao = new ClienteDAO();
 		clientesArray = clienteDao.findAllOnFormatArray();

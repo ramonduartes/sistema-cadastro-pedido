@@ -14,7 +14,6 @@ public class Pedido  {
 	private String dataEntrega;
 	private double totalPedido;
 	private StatusPedido statusPedido = StatusPedido.ABERTO;
-	private int sincronizado = 0;
 	private List<ItemPedido> itens =  new ArrayList<>();
 	
 	public Pedido() {
@@ -86,14 +85,5 @@ public class Pedido  {
 	public void addItem(ItemPedido item) {
 		itens.add(item);
 	}
-
-	public int getSincronizado() {
-		return sincronizado;
-	}
-
-	public void setSincronizado(int sincronizado) {
-		this.sincronizado = sincronizado;
-	}
-	
 	
 }

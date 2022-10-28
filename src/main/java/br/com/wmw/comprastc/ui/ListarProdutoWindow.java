@@ -1,5 +1,6 @@
 package br.com.wmw.comprastc.ui;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,11 @@ public class ListarProdutoWindow extends ScrollContainer {
 		lbProdutos = new Label("Produtos", CENTER, Colors.BLACK, true);
 		containerTopo.add(lbProdutos, CENTER, CENTER, PREFERRED, PREFERRED);
 
-		produtos = new ProdutoService().listarProdutos();
+		try {
+			produtos = new ProdutoService().listarProdutos();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 
 		for (Produto produto: produtos) {
 

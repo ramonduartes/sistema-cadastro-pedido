@@ -1,5 +1,7 @@
 package br.com.wmw.comprastc.ui;
 
+import java.sql.SQLException;
+
 import br.com.wmw.comprastc.dados.Sincronizar;
 import br.com.wmw.comprastc.util.Colors;
 import br.com.wmw.comprastc.util.Images;
@@ -47,7 +49,11 @@ public class TelaMenu extends Container {
 	        btCadastrarPedido.setBackForeColors(Colors.BLUE, Colors.WHITE);
 	        containerBody.add(btCadastrarPedido, LEFT, AFTER + MaterialConstants.COMPONENT_SPACING, FILL, PREFERRED);
 	        btCadastrarPedido.addPressListener((e) -> {
-	            MainWindow.getMainWindow().swap(new ListarClienteWindow());
+	            try {
+					MainWindow.getMainWindow().swap(new ListarClienteWindow());
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 	        });
 
 	        Button btSincronizar = new Button("Sincronizar dados");

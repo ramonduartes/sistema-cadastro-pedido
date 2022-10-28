@@ -10,7 +10,6 @@ import br.com.wmw.comprastc.dto.ItemPedidoDTO;
 import totalcross.sql.Connection;
 import totalcross.sql.ResultSet;
 import totalcross.sql.Statement;
-import totalcross.sys.Vm;
 
 public class ItemPedidoDAO {
 
@@ -21,8 +20,12 @@ public class ItemPedidoDAO {
 		Statement st = connection.createStatement();
 		try {
 			ResultSet rs = st.executeQuery("SELECT * FROM ITEMPEDIDO WHERE COD_PEDIDO =" + id + "");
-			while (rs.next()) {
-				itens.add(new ItemPedido(rs.getInt("COD_PEDIDO")));
+			try {
+				while (rs.next()) {
+					itens.add(new ItemPedido(rs.getInt("COD_PEDIDO")));
+				}
+			} finally {
+				rs.close();
 			}
 		} finally {
 			connection.close();
@@ -39,16 +42,20 @@ public class ItemPedidoDAO {
 		Statement st = connection.createStatement();
 		try {
 			ResultSet rs = st.executeQuery("SELECT COD_ITEMPEDIDO, QUANTIDADE, PRECO_UNITARIO, DESC_PORCENTO, TOTAL, COD_PRODUTO, COD_PEDIDO FROM ITEMPEDIDO WHERE COD_PEDIDO = " + id);
-			while (rs.next()) {
-				ItemPedidoDTO item = new ItemPedidoDTO();
-				item.setId(rs.getInt("COD_ITEMPEDIDO"));
-				item.setQuantidade(rs.getInt("QUANTIDADE"));
-				item.setPrecoUnitario(rs.getDouble("PRECO_UNITARIO"));
-				item.setDesconto(rs.getDouble("DESC_PORCENTO"));
-				item.setTotalItem(rs.getDouble("TOTAL"));
-				item.setIdProduto(rs.getInt("COD_PRODUTO"));
-				item.setIdPedido(rs.getInt("COD_PEDIDO"));
-				itens.add(item);
+			try {
+				while (rs.next()) {
+					ItemPedidoDTO item = new ItemPedidoDTO();
+					item.setId(rs.getInt("COD_ITEMPEDIDO"));
+					item.setQuantidade(rs.getInt("QUANTIDADE"));
+					item.setPrecoUnitario(rs.getDouble("PRECO_UNITARIO"));
+					item.setDesconto(rs.getDouble("DESC_PORCENTO"));
+					item.setTotalItem(rs.getDouble("TOTAL"));
+					item.setIdProduto(rs.getInt("COD_PRODUTO"));
+					item.setIdPedido(rs.getInt("COD_PEDIDO"));
+					itens.add(item);
+				}
+			} finally {
+				rs.close();
 			}
 		} finally {
 			connection.close();
@@ -64,8 +71,12 @@ public class ItemPedidoDAO {
 		int retorno = -1;
 		try {
 			ResultSet rs = connection.createStatement().executeQuery("SELECT COD_ITEMPEDIDO AS COD_ITEMPEDIDO FROM ITEMPEDIDO WHERE COD_ITEMPEDIDO=" + id + "");
-			while (rs.next()) {
-				retorno = rs.getInt("COD_ITEMPEDIDO");
+			try {
+				while (rs.next()) {
+					retorno = rs.getInt("COD_ITEMPEDIDO");
+				}
+			} finally {
+				rs.close();
 			}
 		} finally {
 			connection.close();
@@ -75,31 +86,32 @@ public class ItemPedidoDAO {
 
 	}
 
-	public List<ItemPedido> findByCodigoPedido(Integer codigoPedido) {
+	public List<ItemPedido> findByCodigoPedido(Integer codigoPedido) throws SQLException {
 		List<ItemPedido> itens = new ArrayList<>();
-		try{
-			Connection connection = DatabaseManager.getConnection();
-			Statement st = connection.createStatement();
+
+		Connection connection = DatabaseManager.getConnection();
+		Statement st = connection.createStatement();
+		try {
+			ResultSet rs = st.executeQuery("SELECT COD_ITEMPEDIDO, QUANTIDADE, PRECO_UNITARIO, DESC_PORCENTO, TOTAL, COD_PRODUTO, COD_PEDIDO FROM ITEMPEDIDO WHERE COD_PEDIDO = " + codigoPedido);
 			try {
-				try(ResultSet rs = st.executeQuery("SELECT COD_ITEMPEDIDO, QUANTIDADE, PRECO_UNITARIO, DESC_PORCENTO, TOTAL, COD_PRODUTO, COD_PEDIDO FROM ITEMPEDIDO WHERE COD_PEDIDO = " + codigoPedido)) {
-					while(rs.next()) {
-						ItemPedido item = new ItemPedido();
-						item.setCodigoItemPedido(rs.getInt("COD_ITEMPEDIDO"));
-						item.setQuantidade(rs.getInt("QUANTIDADE"));
-						item.setPrecoUnitario(rs.getDouble("PRECO_UNITARIO"));
-						item.setDesconto(rs.getDouble("DESC_PORCENTO"));
-						item.setTotalItem(rs.getDouble("TOTAL"));
-						item.setCodigoProduto(rs.getLong("COD_PRODUTO"));
-						item.setCodigoPedido(rs.getInt("COD_PEDIDO"));
-						itens.add(item);
-					}
+				while(rs.next()) {
+					ItemPedido item = new ItemPedido();
+					item.setCodigoItemPedido(rs.getInt("COD_ITEMPEDIDO"));
+					item.setQuantidade(rs.getInt("QUANTIDADE"));
+					item.setPrecoUnitario(rs.getDouble("PRECO_UNITARIO"));
+					item.setDesconto(rs.getDouble("DESC_PORCENTO"));
+					item.setTotalItem(rs.getDouble("TOTAL"));
+					item.setCodigoProduto(rs.getLong("COD_PRODUTO"));
+					item.setCodigoPedido(rs.getInt("COD_PEDIDO"));
+					itens.add(item);
 				}
 			} finally {
-				st.close();
+				rs.close();
 			}
-		} catch (SQLException e) {
-			Vm.debug(e.getMessage());
+		} finally {
+			st.close();
 		}
+
 
 		return itens;
 	}

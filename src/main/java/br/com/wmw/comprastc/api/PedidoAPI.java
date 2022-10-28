@@ -10,6 +10,7 @@ import br.com.wmw.comprastc.dados.Response;
 import br.com.wmw.comprastc.dao.ItemPedidoDAO;
 import br.com.wmw.comprastc.dao.PedidoDAO;
 import br.com.wmw.comprastc.dto.PedidoDTO;
+import br.com.wmw.comprastc.exception.ConnectionException;
 import br.com.wmw.comprastc.exception.PersistenceException;
 import br.com.wmw.comprastc.service.PedidoService;
 import totalcross.io.ByteArrayStream;
@@ -73,7 +74,7 @@ public class PedidoAPI {
             }
 
         } catch (IOException e1) {
-            msg = "erro";
+           throw new ConnectionException("API indisponível para o envio dos pedidos.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

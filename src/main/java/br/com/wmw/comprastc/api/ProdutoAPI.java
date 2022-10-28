@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.wmw.comprastc.domain.Produto;
+import br.com.wmw.comprastc.exception.ConnectionException;
 import totalcross.io.ByteArrayStream;
 import totalcross.io.IOException;
 import totalcross.json.JSONException;
@@ -35,7 +36,7 @@ public class ProdutoAPI {
 				IllegalArgumentException | InvocationTargetException | JSONException | NoSuchMethodException | SecurityException e) {
 			Vm.debug(e.getMessage());
 		} catch (IOException e) {
-			Vm.debug("Dispositivo sem conexão e/ou API indisponível para recebimento dos cadastros de produtos.");
+			throw new ConnectionException("API indisponível para recebimento dos cadastros de produtos.");
 		}
 		return produtosList;
 	}
